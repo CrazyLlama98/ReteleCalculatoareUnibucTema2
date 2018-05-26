@@ -15,7 +15,7 @@ services:
               ipv4_address: 198.13.0.14
         depends_on:
             - "rt2"
-        command: bash -c "ip route add 172.111.0.0/16 via 198.13.0.1 && iptables -A OUTPUT -p tcp --tcp-flags RST RST -j DROP && sleep infinity"
+        command: bash -c "ip route add 172.111.0.0/16 via 198.13.0.1 && iptables -A OUTPUT -p tcp --tcp-flags RST RST -j DROP && tcpdump -Snnt tcp"
     mid1:
         image: baseimage:latest
         volumes:
@@ -32,7 +32,7 @@ services:
             - "rt2"
         sysctls:
           - net.ipv4.ip_forward=1
-        command: bash -c "ip route add 172.111.0.0/16 via 198.13.0.1 && iptables -A OUTPUT -p tcp --tcp-flags RST RST -j DROP && sleep infinity"
+        command: bash -c "ip route add 172.111.0.0/16 via 198.13.0.1 && iptables -A OUTPUT -p tcp --tcp-flags RST RST -j DROP && tcpdump -Snnt tcp"
     rt2:
         image: baseimage:latest
         volumes:
